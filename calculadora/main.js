@@ -1,10 +1,12 @@
 
 
 import {Menu} from "./class/menu.js"
+
 import {Calculadora} from "./class/calculadora.js"
 
 async function main() {
     const menu = new Menu();
+    console.log(tarea.titulo)
     const calculadora = new Calculadora() 
     let opcion
     do{
@@ -16,6 +18,8 @@ async function main() {
             case "3": await calculadora.mult(); break;
             case "4": await calculadora.div(); break;
         }
+
+        
         
     }while(opcion != "0")
 }
