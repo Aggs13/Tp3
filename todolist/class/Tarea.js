@@ -45,27 +45,14 @@ export class Tarea{
         tarea.Id = id
         tarea.Titulo = await input("Titulo: ")
         tarea.Descripcion = await input("Descripcion: ")
-    
-        const estados = ["Pendiente", "En Proceso", "Terminado", "Cancelado"]
-        op = await input("Estado: [1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado: ")
-        tarea.Estado = estados[parseInt(op) - 1] || "Pendiente"
-
-        const dificultades = ["Facil", "Normal", "Dificil"]
-        op = await input("Dificultad: [1]Facil [2]Normal [3]Dificil: ")
-        tarea.Dificultad = dificultades[parseInt(op) - 1] || "Normal"
-
+        tarea.Estado = await this.elegirEstado()
+        tarea.Dificultad = await this.elegirDificultad()
         tarea.FechaCreacion = new Date().toLocaleDateString();
-
-        console.log("En cuantos dias vence? ")
-        let dias = await input("Dias : ")
-        let FechaVencimiento = new Date()
-        FechaVencimiento.setDate(FechaVencimiento.getDate() + parseInt(dias))
-
-        tarea.FechaVencimiento = FechaVencimiento.toLocaleDateString()
+        tarea.FechaVencimiento = await this.establecerVencimiento()
         
-
         return tarea
     }
+
 
 
     async mostrarTareas(tareas){
@@ -80,6 +67,8 @@ export class Tarea{
         });
     }
 
+
+
     // metodo para Buscar Tareas
     async buscarTareas(tareas,num){
         console.clear()
@@ -87,12 +76,18 @@ export class Tarea{
         console.log("Buscar tarea por [1].ID [2].Dificultad [3].Estado")
         op = await input("> ")
 
+
+
         // busqueda por ID
         if(op == "1"){
             const id  = await input(">Ingrese el ID: ")
             console.log("---------------")
             tareas.filter(t => t.Id === parseInt(id)).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`));
+            console.log("---------------")
+            return
         }
+
+
 
         // buscqueda por Dificultad
         if(op == "2"){
@@ -101,7 +96,11 @@ export class Tarea{
             const dificultad = dificultades[parseInt(op)- 1]
             console.log("---------------")
             tareas.filter(t => t.Dificultad === dificultad).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`))
+            console.log("---------------")
+            return
         }
+
+
 
         // busqueda por estado
         if(op == "3"){
@@ -110,8 +109,12 @@ export class Tarea{
             const estado = estados[parseInt(op)-1]
             console.log("---------------")
             tareas.filter(t => t.Estado === estado).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`));
+            console.log("---------------")
+            return
         }
     }
+
+
 
 
     // Metodo Editar una tarea
@@ -128,23 +131,41 @@ export class Tarea{
 
         tarea.Titulo = await input("Titulo: ")
         tarea.Descripcion = await input("Descripcion: ")
-    
-        const estados = ["Pendiente", "En Proceso", "Terminado", "Cancelado"]
-        op = await input("Estado: [1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado: ")
-        tarea.Estado = estados[parseInt(op) - 1] || "Pendiente"
-
-        const dificultades = ["Facil", "Normal", "Dificil"]
-        op = await input("Dificultad: [1]Facil [2]Normal [3]Dificil: ")
-        tarea.Dificultad = dificultades[parseInt(op) - 1] || "Normal"
-
+        tarea.Estado = await this.elegirEstado()
+        tarea.Dificultad = await this.elegirDificultad()
         tarea.FechaCreacion = new Date().toLocaleDateString() + "(Editada)"
+        tarea.FechaVencimiento = await this.establecerVencimiento()
 
+        return tareas
+    }
+
+
+    // Metodos para que no sea tan repetitivo
+    async elegirEstado(){
+
+        const estados = ["Pendiente", "En Proceso", "Terminado", "Cancelado"]
+        let op = await input("Estado: [1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado: ")
+        let estado = estados[parseInt(op) - 1] || "Pendiente"
+
+       return estado
+
+    }
+
+    async elegirDificultad(){
+        const dificultades = ["Facil", "Normal", "Dificil"]
+        let op = await input("Dificultad: [1]Facil [2]Normal [3]Dificil: ")
+        let dificultad = dificultades[parseInt(op) - 1] || "Normal"
+
+       return dificultad
+    }
+
+    async establecerVencimiento(){
+    
         console.log("En cuantos dias vence? ")
         let dias = await input("Dias : ")
         let FechaVencimiento = new Date()
         FechaVencimiento.setDate(FechaVencimiento.getDate() + parseInt(dias))
-        tarea.FechaVencimiento = FechaVencimiento.toLocaleDateString()
-
-        return tareas
+        return FechaVencimiento.toLocaleDateString()
     }
+    
 }
