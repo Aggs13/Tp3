@@ -14,9 +14,11 @@ async function Main() {
         case "2": break;
 
         case "3": 
-            const newTarea = await tarea.nuevaTarea(); 
+            const newTarea = await tarea.nuevaTarea(tareasArray.length); 
             tareasArray.push(newTarea)
         break;
+
+        case "4":await tarea.mostrarTareas(); break;
        }
        
 
