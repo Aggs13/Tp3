@@ -13,5 +13,4 @@ export class Calculadora{
     async resta (){ await this.operar((num1,num2) => num1-num2, "-")}
     async mult (){ await this.operar((num1,num2) => num1*num2, "*")}
     async div (){ await this.operar((num1,num2) => num1/num2, "/")}
-
 }
