@@ -12,13 +12,8 @@ async function Main() {
        switch(op){
         case "1": tarea.mostrarTareas(tareasArray); break;
         case "2": await tarea.buscarTareas(tareasArray); break;
-
-        case "3": 
-            const newTarea = await tarea.nuevaTarea(tareasArray.length); 
-            tareasArray.push(newTarea)
-        break;
-
-        case "4":await tarea.mostrarTareas(); break;
+        case "3": const newTarea = await tarea.nuevaTarea(tareasArray.length); tareasArray.push(newTarea); break;
+        case "4":tareasArray = await tarea.editarTarea(tareasArray);  break;
        }
        
 
