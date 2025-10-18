@@ -32,30 +32,27 @@ export class Tarea{
     set Id(v){ this.#Id = v}
     set Titulo(v){ this.#Titulo = v}
     set Descripcion(v){ this.#Descripcion = v}
-    set Estado(v){this.#Estado}
+    set Estado(v){this.#Estado = v}
     set Dificultad(v){ this.#Dificultad = v}
     set FechaCreacion(v){ this.#FechaCreacion = v}
     set FechaVencimiento(v){ this.#FechaVencimiento = v}
 
     async nuevaTarea(id){
+        console.clear()
         let op
         const tarea = new Tarea
         tarea.Id = id
         tarea.Titulo = await input("Titulo: ")
         tarea.Descripcion = await input("Descripcion: ")
-        
-        op = await input("[1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado: ")
-        if(op == "1") tarea.Estado = "Pendiente"
-        if(op == "2") tarea.Estado = "En Proceso"
-        if(op == "3") tarea.Estado = "Terminado"
-        if(op == "4") tarea.Estado = "Cancelado"
+    
+        const estados = ["Pendiente", "En Proceso", "Terminado", "Cancelado"]
+        op = await input("Estado: [1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado: ")
+        tarea.Estado = estados[parseInt(op) - 1] || "Pendiente"
 
-        op = await input("Dificultad [1]Facil [2]Normal [3]Dificil")
-        if(op == "1")tarea.Dificultad = "Facil"
-        if(op == "1")tarea.Dificultad = "Normal"
-        if(op == "1")tarea.Dificultad = "Dificil"
+        const dificultades = ["Facil", "Normal", "Dificil"]
+        op = await input("Dificultad: [1]Facil [2]Normal [3]Dificil: ")
+        tarea.Dificultad = dificultades[parseInt(op) - 1] || "Normal"
 
-        tarea.Dificultad = await input("Dificultad: ")
         tarea.FechaCreacion = "Hoy"
         tarea.FechaVencimiento = await input("Vencimineto: ")
 
@@ -64,49 +61,46 @@ export class Tarea{
 
 
     async mostrarTareas(tareas){
+        console.clear()
         tareas.forEach(t => {
-            
-            console.log(`ID: [${t.Id}] `)
-            console.log(`Titulo: [${t.Titulo}]`)
-            console.log(`Descripcion: [${t.Descripcion}]`)
-            console.log(`Dificultad: [${t.Dificultad}]`)
-            console.log(`Fecha de Creacion: [${t.FechaCreacion}]`)
-            console.log(`Vencimiento: [${t.FechaVencimiento}]`)
+            console.log("-----------------")
+            console.log(`ID: [${t.Id}] || Titulo: ${t.Titulo}`)
+            console.log(`Descripcion: ${t.Descripcion}`)
+            console.log(`Estado: ${t.Estado} || Dificultad: ${t.Dificultad}`)
+            console.log(`Creacion: ${t.FechaCreacion} || Vencimiento: ${t.FechaVencimiento}`)
             console.log("-----------------")
         });
     }
 
     async buscarTareas(tareas,num){
+        console.clear()
         let op
         console.log("Buscar tarea por [1].ID [2].Dificultad [3].Estado")
         op = await input("> ")
+
+        // busqueda por ID
         if(op == "1"){
-            op  = await input(">Ingrese el ID: ")
-            tareas.forEach(t => {
-                if(t.id === op){
-                    console.log(`ID: [${t.Id}] `)
-                    console.log(`Titulo: [${t.Titulo}]`)
-                }
-            });
+            const id  = await input(">Ingrese el ID: ")
+            console.log("---------------")
+            tareas.filter(t => t.Id === parseInt(id)).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`));
         }
 
+        // buscqueda por Dificultad
         if(op == "2"){
+            const dificultades = ["Facil", "Normal", "Dificil"]
             op = await input("Dificultad [1]Facil [2]Normal [3]Dificil")
-            tareas.forEach(t => {
-                if(op === "1" && t.Dificultad == "Facil"){ console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                if(op === "2" && t.Dificultad == "Normal"){console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                if(op === "3" && t.Dificultad == "Dificil"){console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-            });
+            const dificultad = dificultades[parseInt(op)- 1]
+            console.log("---------------")
+            tareas.filter(t => t.Dificultad === dificultad).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`))
         }
 
+        // busqueda por estado
         if(op == "3"){
+            const estados = ["Pendiente", "En Proceso", "Terminado", "Cancelado"]
             op = await input("Estado [1]Pendiente [2]En Proceso [3]Terminado [4]Cancelado")
-                tareas.forEach(t => {
-                    if(op === "1" && t.Dificultad == "Pendiente"){ console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                    if(op === "2" && t.Dificultad == "En Proceso"){console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                    if(op === "3" && t.Dificultad == "Terminado"){console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                    if(op === "4" && t.Dificultad == "Cancelado"){console.log(`ID: [${t.Id}] `); console.log(`Titulo: [${t.Titulo}]`)}
-                });
+            const estado = estados[parseInt(op)-1]
+            console.log("---------------")
+            tareas.filter(t => t.Estado === estado).forEach(t => console.log(`ID [${t.Id}] |Titulo: ${t.Titulo}`));
         }
     }
 }

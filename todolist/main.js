@@ -11,7 +11,7 @@ async function Main() {
        op = await menu.mostrarMenu()
        switch(op){
         case "1": tarea.mostrarTareas(tareasArray); break;
-        case "2": break;
+        case "2": await tarea.buscarTareas(tareasArray); break;
 
         case "3": 
             const newTarea = await tarea.nuevaTarea(tareasArray.length); 
