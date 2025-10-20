@@ -1,0 +1,49 @@
+
+
+# Ejercicio 1
+
+
+Objetos y prototipos: Los objetos pueden heredar directamente de otros objetos a través de prototipos.
+
+const persona = { nombre: "Ana" };
+const estudiante = Object.create(persona);
+estudiante.curso = "Matemáticas";
+
+
+Clases 
+
+class Tarea {
+    constructor(titulo) { this.titulo = titulo; }
+    mostrar() { console.log(this.titulo); }
+}
+
+
+
+2. Creencias de los profesionales
+
+JavaScript es flexible y dinámico, permite crear objetos y relaciones de herencia sin la rigidez de lenguajes como Java.
+
+La sintaxis de clases se valora por hacer el código más legible y estructurado, acercando JS a paradigmas clásicos OOP.
+
+
+
+
+# Ejercicio 4
+
+
+En los ejercicios 2 y 3, utilicé varias características de la POO para organizar y simplificar el código:
+
+Clases y objetos: Creé la clase Tarea para representar cada tarea con atributos como Id, Titulo, Descripcion, Estado, Dificultad, FechaCreacion y FechaVencimiento. Esto permite instanciar múltiples tareas sin repetir código.
+
+const tarea1 = new Tarea(0, "Hacer compras", "Comprar verduras", "Pendiente", "Normal", "17/10/2025", "20/10/2025");
+
+
+Encapsulamiento: Los atributos son privados con "#" y se accede a ellos con getters y setters.
+
+tarea1.Titulo = "Hacer compras en el supermercado" <-- set
+console.log(tarea1.Titulo) <-- get
+
+
+Métodos y abstracción: Métodos como nuevaTarea(), mostrarTareas() y editarTarea() permiten menejar las tareas sin modificar sus atributos y ocultando la implementación interna.
+
+Herencia y polimorfismo: No se utilizaron, ya que todas las tareas son del mismo tipo y comparten los mismos comportamientos, por lo que no era necesario.
